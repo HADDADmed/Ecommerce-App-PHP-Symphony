@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+ 
+
+     
+{% block title %}Hello StudentListeController!{% endblock %}
+{% block header %}
+          {% include 'Partials/_header.html.twig' %}
+     {% endblock %}
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'C:/Users/mohhd/Desktop/WorkSpaceSymfony/Tuto/LearningProject/src/Controller/StudentListeController.php'|file_link(0) }}">src/Controller/StudentListeController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/Users/mohhd/Desktop/WorkSpaceSymfony/Tuto/LearningProject/templates/student_liste/index.html.twig'|file_link(0) }}">templates/student_liste/index.html.twig</a></code></li>
+    </ul>
+</div>
+
+{% endblock %}

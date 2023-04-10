@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+
+     {% block header %}
+          {% include 'Partials/_header1.html.twig' %}
+     {% endblock %}
+
+{% block body %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ma landing page</title>
+    <!-- Liens vers les fichiers CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Style personnalisé -->
+    <style>
+      /* Style de l'image de fond */
+      body {
+        background-image: url('images/img1(0).jpg');
+        background-size: cover;
+        background-position: center;
+      }
+      /* Style du contenu de la page */
+      .content {
+        padding-top: 100px;
+        text-align: center;
+        color: white;
+      }
+      h1 {
+        font-size: 4em;
+      }
+      p {
+        font-size: 1.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Contenu de la page -->
+    <div class="content">
+      <h1>HADDAD's shop</h1>
+      <button class="btn btn-primary">Inscrivez-vous</button>
+    </div>
+    <!-- Scripts JavaScript de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+{% endblock %}

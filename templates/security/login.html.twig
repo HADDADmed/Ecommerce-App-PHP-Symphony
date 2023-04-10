@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}login{% endblock %}
+
+{% block body %}
+<form>
+
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+  <label class="form-label mt-4" for="form2Example1">Email address</label>
+    <input type="email" id="form2Example1" class="form-control" placeholder="Email address" />
+    
+  </div>
+        {# 4;08 min #}
+ 
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+  <label class="form-label mt-4" for="form2Example2">Password</label>
+    <input type="password" id="form2Example2" class="form-control"  placeholder="Password"/>
+    
+  </div>
+
+  <!-- 2 column grid layout for inline styling -->
+  <div class="row mb-4">
+    <div class="col d-flex justify-content-center">
+      <!-- Checkbox -->
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+</form>
+{% endblock %}

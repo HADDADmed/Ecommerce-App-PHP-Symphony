@@ -1,0 +1,48 @@
+
+{% extends 'base.html.twig' %}
+
+     {% block header %}
+          {% include 'Partials/_header1.html.twig' %}
+     {% endblock %}
+{% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            <style>
+                            * {
+                    margin: 0;
+                    padding: 0
+                }
+
+                body {
+                    background-color: #000
+                }
+              
+                .text {
+                    font-size: 23px;
+                    font-weight: bold
+                }
+
+               
+            
+            </style>
+        {% endblock %}
+{% block body %}
+
+<div class="container">
+     <a href="{{path('category_new')}}"><div class="d-flex justify-content-center align-items-center mt-5"> <button class="btn btn-dark">ADD CATEGORIE</button>  </div></a>
+    {% for category in categories %}
+    
+    <div class="row mt-2 g-4 d-flex justify-content-center">
+        <div class="col-md-3">
+            <div class="card p-1">
+                <div class="d-flex justify-content-between align-items-center p-2">
+                    <div class="flex-column lh-1 imagename"> {{category.name}}</div>
+                     <a href="{{path('category_d',{ 'id': category.id })}}"> <div> <img src="{{ asset(category.imgPath)}}" height="100" width="100" /> </div> </a>
+                </div>
+            </div>
+    </div>
+      {% endfor %}
+        <div class="navigation d-flex justify-content-center mt-4 ">
+                                    {{ knp_pagination_render(categories) }}
+       </div>
+</div>
+{% endblock %}

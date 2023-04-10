@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+ {% block header %}
+          {% include 'Partials/_header1.html.twig' %}
+     {% endblock %}
+     {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <style>
+        body{background:#eee}.ratings i{font-size: 16px;color: red}.strike-text{color: red;text-decoration: line-through}.product-image{width: 100%}.dot{height: 7px;width: 7px;margin-left: 6px;margin-right: 6px;margin-top: 3px;background-color: blue;border-radius: 50%;display: inline-block}.spec-1{color: #938787;font-size: 15px}h5{font-weight: 400}.para{font-size: 16px}    
+     </style>
+        {% endblock %}
+     {% block body %}
+
+            <div class="d-flex justify-content-between">
+                                        <p class="alert alert-warning"><b>There are <strong style="color:#ff9966;">{{ productcount }}</strong>  products in total in {{cat}} category !</b></p>
+                                    </div>
+
+                        <h1 class="text-center mt-4">Product Of Category :  {{cat}}</h1>
+
+
+                    <div class="container mt-5 mb-5">
+
+                                    {# <div id="d-flex" >
+                                        <div class="btn-lg d-flex justify-content-start d-inline-block"><a href="{{ path('product_new')}}" class="btn btn-outline-primary">Add New Product</a></div>
+                                        <p class="d-flex justify-content-end d-inline-block"><b>there is {{products.getTotalItemCount}} product in total !</b></p>
+                                    </div> #}
+                                    {% for product in products %}
+                               
+                                <div class="row bg-white border rounded mt-2">
+                                    <div class="col-md-3 mt-1"> <a href="{{path('product_edit',{ 'id': product.id })}}"><img class="img-fluid img-responsive rounded product-image" src="{{ asset(product.imgPath)}}" > </a> </div>
+                                        <div class="col-md-4 mt-1">
+                                                <h5 class="card-title ">Name : {{product.name}}</h5>
+                                                <p class="card-text mt-4">Description :{{product.description}}</p>
+                                                <p class="card-text "><small class="text-muted">Created at: {{product.createdAt|date("m/d/Y")}}</small></p>
+                                        </div>
+                                    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                                        <div class="d-flex flex-row align-items-center">
+                                                <h4 class="mr-1">${{product.price|number_format(2)}}</h4>
+                                        </div>
+                                                    <div class="d-flex flex-column mt-4">
+                                                        <a class="btn btn-danger btn-sm"  onclick="return confirm('are u sure?')" href="{{path('product_deletepc',{ 'id': product.id })}}"type="button">Suppression</a>
+                                                        <a class="btn btn btn-secondary btn-sm mt-2" href="{{path('product_editCatP',{ 'id': product.id })}}" type="button">Edit</a></div>
+                                                    </div>
+                                        </div>
+                                        </a>
+                                    {% endfor %}
+                                    <div class="navigation d-flex justify-content-center mt-1 ">
+                                    {{ knp_pagination_render(products) }}
+                                </div>
+
+                        </div>
+                        
+                    </div>
+                    </div>
+{# display navigation #}
+
+</style>
+         {# {% for product in  products %}
+        
+    <div class="row">
+        <div class="col-lg-8 mx-auto mt-4">
+            <!-- List group-->
+            <ul class="list-group shadow">
+                <!-- list group item-->
+                <li class="list-group-item">
+                    <!-- Custom content-->
+                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                        <div class="media-body order-2 order-lg-1">
+                            <h5 class="mt-0 font-weight-bold mb-2">{{product.name}}</h5>
+                            <p class="font-italic text-muted mb-0 small">{{product.description}}</p>
+                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                <h6 class="font-weight-bold my-2">{{product.price}} $</h6>
+                                <ul class="list-inline small">
+                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                    <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                    <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>
+                                </ul>
+                            </div>
+                        </div><img src="{{ asset('images/img.jpg')}}"  alt="{{product.name}} image2" width="200" class="ml-lg-5 order-1 order-lg-2">
+
+                    </div> <!-- End -->
+                </li> <!-- End -->
+            </ul> <!-- End -->
+        </div>
+    </div>
+</div>
+            {% endfor %} #}
+     {% endblock %} 
