@@ -44,7 +44,7 @@ class ProductController extends AbstractController
             'products' => $products,
         ]);
     }
-
+     
     #[Route('/product/{id}', name: 'details_product')]
     public function detailsP(Product $product): Response
     {
@@ -60,7 +60,7 @@ class ProductController extends AbstractController
     
         return $this->render('Home2.html.twig');
     }
-    #[Route('/', name: 'home_Page')]
+    #[Route('/', name: 'home_Page2')]
     public function home2(): Response
     {
     
@@ -74,7 +74,6 @@ class ProductController extends AbstractController
         $product = new Product();
 
         $form = $this->createForm(ProductType::class, $product);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
@@ -85,7 +84,7 @@ class ProductController extends AbstractController
                     $entityManager->flush();
             // ... perform some action, such as saving the task to the database
             $this->addFlash(
-               'success',
+               'su ccess',
                'The product '.$product->getname().' was added successfully!'
             );
               return $this->redirectToRoute('app_product');
@@ -98,7 +97,7 @@ class ProductController extends AbstractController
     #[Route('/product/edit/{id}', name: 'product_edit' , methods:['GET','POST'])]
      public function edit(EntityManagerInterface $entityManager,Product $product,Request $request):Response
      {
-        // $product = $entityManager->getRepository(Product::class)->findOneBy(['id' => $id]);
+        //$product = $entityManager->getRepository(Product::class)->findOneBy(['id' => $id]);
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\UserType; 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

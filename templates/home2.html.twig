@@ -39,7 +39,10 @@
     <!-- Contenu de la page -->
     <div class="content">
       <h1>HADDAD's shop</h1>
-      <button class="btn btn-primary">Inscrivez-vous</button>
+       <div class="d-flex justify-content-center px-2">
+       <a href="{{path('security.registration')}}" class="mt-4"><button class="btn btn-primary px-2"> Registration</button></a>
+       <a href="{{path('security.login')}}" class="mt-4"><button class="btn btn-success px-2"> Login</button></a>
+      </div>
     </div>
     <!-- Scripts JavaScript de Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
