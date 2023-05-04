@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -57,10 +59,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'users')]
+    private Collection $Cart;
+
+    
+
+   
+
 
     public function __construct(){
 
         $this->createdAt = new DateTimeImmutable();
+        $this->Cart = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -182,4 +193,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getCart(): Collection
+    {
+        return $this->Cart;
+    }
+
+    public function addCart(Product $cart): self
+    {
+        if (!$this->Cart->contains($cart)) {
+            $this->Cart->add($cart);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Product $cart): self
+    {
+        $this->Cart->removeElement($cart);
+
+        return $this;
+    }
+
+  
+
+    
 }

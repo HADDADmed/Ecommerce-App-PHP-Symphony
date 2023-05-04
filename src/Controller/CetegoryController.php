@@ -29,7 +29,7 @@ class CetegoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
             // but, the original `$product` variable has also been updated
-            $category = new Product();
+            $category = new Category();
             $category = $form->getData();
                     $entityManager->persist($category);
                     $entityManager->flush();

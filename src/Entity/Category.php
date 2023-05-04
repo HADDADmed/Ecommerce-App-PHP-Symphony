@@ -27,6 +27,7 @@ class Category
     private ?string $imgPath = null;
 
     
+    
 
     public function __construct()
     {
@@ -91,6 +92,7 @@ class Category
 
         return $this;
     }
+
 
     
 }

@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+          {% include 'Partials/_headerForClient.html.twig' %}
+{% endblock %}
+     {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <style>
+        body{background:#eee}.ratings i{font-size: 16px;color: red}.strike-text{color: red;text-decoration: line-through}.product-image{width: 100%}.dot{height: 7px;width: 7px;margin-left: 6px;margin-right: 6px;margin-top: 3px;background-color: blue;border-radius: 50%;display: inline-block}.spec-1{color: #938787;font-size: 15px}h5{font-weight: 400}.para{font-size: 16px}    
+     </style>
+        {% endblock %}
+     {% block body %}
+        
+                    <div class="container mt-5 mb-5">
+
+                                    <div class="d-flex justify-content-between">
+                                        <p class="alert alert-warning"><b>There are <strong style="color:#ff9966;">{{products|length }}</strong>  products in your Cart!</b></p>
+                                        <div class="btn-lg"><a href="{{ path('home_Page')}}" class="btn btn-warning">Add More Products</a></div>   
+                                        <p class="alert alert-success"><b>Total Price is :<strong style="color:#ff9966;">$ {{ totalPrice|number_format(2) }}</strong>  products in total!</b></p>
+
+                                    </div>
+
+                                        {% for message in app.flashes('success') %}
+                                            <div class="alert alert-success">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %} 
+                                        {% for message in app.flashes('danger') %}
+                                            <div class="alert alert-danger">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %}
+                                    {# <div id="d-flex" >
+                                        <div class="btn-lg d-flex justify-content-start d-inline-block"><a href="{{ path('product_new')}}" class="btn btn-outline-primary">Add New Product</a></div>
+                                        <p class="d-flex justify-content-end d-inline-block"><b>there is {{products.getTotalItemCount}} product in total !</b></p>
+                                    </div> #}
+                                    {% for product in products %}
+                               
+                                <div class="row bg-white border rounded mt-2">
+                                    <div class="col-md-3 mt-1"> <a href="{{path('details_product',{ 'id': product.id })}}"><img class="img-fluid img-responsive rounded product-image" src="{{ asset(product.imgPath)}}" > </a> </div>
+                                        <div class="col-md-4 mt-1">
+                                                <h5 class="card-title ">Name : {{product.name}}</h5>
+                                                <p class="card-text mt-4">Description :{{product.description}}</p>                                                <p class="card-text "><small class="text-muted">Created at: {{product.createdAt|date("m/d/Y")}}</small></p>
+                                        </div>
+                                    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                                        <div class="d-flex flex-row align-items-center">
+                                                <h4 class="mr-1">${{product.price|number_format(2)}}</h4>
+                                        </div>
+                                                    <div class="d-flex flex-column mt-4">
+                                                        <a class="btn btn-danger btn-sm"  onclick="return confirm('are u sure?')" href="{{path('product_delete',{ 'id': product.id })}}"type="button">Delete from carte</a>
+                                                        <a class="btn btn btn-secondary btn-sm mt-2" href="{{path('product_edit',{ 'id': product.id })}}" type="button">Add To favourite</a></div>
+                                                    </div>
+                                        </div>
+                                        </a>
+                                    {% endfor %}
+                                    {# <div class="navigation d-flex justify-content-center mt-1 ">
+                                    {{ knp_pagination_render(products) }}
+                                </div> #}
+                                <div class="d-flex justify-content-between mt-4">
+                                    <p class="alert alert-warning"><b>There are <strong style="color:#ff9966;">{{products|length }}</strong>  products in your Cart!</b></p>
+                                    <p class="alert alert-success"><b>Total Price is :<strong style="color:#ff9966;">$ {{ totalPrice|number_format(2) }}</strong>  products in total!</b></p>
+        
+                                </div>
+
+                        </div>
+                       
+                        
+                    </div>
+                    </div>
+{# display navigation #}
+
+     {% endblock %} 

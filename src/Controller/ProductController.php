@@ -27,8 +27,10 @@ class ProductController extends AbstractController
     public function index(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request): Response
     {
 
+        
         $products = $paginator->paginate(
-            $entityManager->getRepository(Product::class)->findAll(),
+            $entityManager->getRepository(Product::class)
+                            ->findBy(['user'=>$this->getUser()]),
             $request->query->getInt('page', 1), /*page number*/
             3 /*limit per page*/
         );
@@ -54,19 +56,8 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/home', name: 'home_Page')]
-    public function home(): Response
-    {
     
-        return $this->render('Home2.html.twig');
-    }
-    #[Route('/', name: 'home_Page2')]
-    public function home2(): Response
-    {
     
-        return $this->render('Home2.html.twig');
-    }
-
   
     #[Route('/product/add/new', name: 'product_new' , methods:['GET','POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -80,6 +71,7 @@ class ProductController extends AbstractController
             // but, the original `$product` variable has also been updated
             $product = new Product();
             $product = $form->getData();
+            $product->setUser($this->getUser());
                     $entityManager->persist($product);
                     $entityManager->flush();
             // ... perform some action, such as saving the task to the database
