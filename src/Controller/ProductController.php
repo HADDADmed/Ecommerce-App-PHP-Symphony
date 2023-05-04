@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Form\CategoryType;
+use App\Form\User;
 use App\Form\ProductType;
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,10 +28,12 @@ class ProductController extends AbstractController
     public function index(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request): Response
     {
 
-        
+        if (!$this->getUser() || !$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('home2.html.twig');
+        }
         $products = $paginator->paginate(
             $entityManager->getRepository(Product::class)
-                            ->findBy(['user'=>$this->getUser()]),
+                            ->findAll(),
             $request->query->getInt('page', 1), /*page number*/
             3 /*limit per page*/
         );
@@ -44,16 +47,34 @@ class ProductController extends AbstractController
 
         return $this->render('Products\index.html.twig', [
             'products' => $products,
+            'user'=>$this->getUser()
         ]);
     }
      
     #[Route('/product/{id}', name: 'details_product')]
     public function detailsP(Product $product): Response
     {
+        
+        if (!$this->getUser() || !$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('home2.html.twig');
+        }
+        $user = $this->getUser();
+        $roles = $user->getRoles();
+    
+
+       
+        if (in_array('ROLE_ADMIN', $roles)) {
 
         return $this->render('Products\ProductDetails.html.twig', [
                'product' => $product,
         ]);
+        }elseif (in_array('ROLE_CLIENT', $roles)) {
+
+            return $this->render('client\singleProduct.html.twig', [
+                   'product' => $product,
+            ]);
+            }
+            return $this->render('home2.html.twig');
     }
 
     
@@ -128,29 +149,7 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('app_product');  
       } 
 
-      #[Route('/category', name: 'app_category')]
-    public function categories(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request): Response
-    {
-
-        $category = $paginator->paginate(
-            $entityManager->getRepository(Category::class)->findAll(),
-            $request->query->getInt('page', 1), /*page number*/
-            3 /*limit per page*/
-        );
-    
-
-        if (!$category) {
-            throw $this->createNotFoundException(
-                'No category found in our DATABASE !'
-            );
-        }
-
-        return $this->render('Categories\categories.html.twig', [
-            'categories' => $category,
-            
-        ]);
-    }
-
+     
     
 }
 

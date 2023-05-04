@@ -19,7 +19,7 @@
 {% block body %}
 
 <div class="container mt-5">
-     <h1>Users List</h1>
+     <h1>Cart of {{user.fUllName}} </h1>
      {% for message in app.flashes('success') %}
      <div class="alert alert-success">
          {{ message }}
@@ -30,45 +30,28 @@
          {{ message }}
      </div>
  {% endfor %}
+
+ <div class="alert alert-success">
+   the total price in {{user.fUllName}}'s Cart is $ {{ totalPrice|number_format(2)}} 
+</div>
      <table class="table table-striped">
           <thead>
                <tr>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Created At</th>
-                    <th>Cart of Client</th>
-                    <th>Delete</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
                </tr>
           </thead>
           <tbody>
-               {% for user in users %}
+               {% for product in products %}
                <tr>
-                    <td>{{user.fUllName}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{ user.createdAt|date('d/m/y') }}</td>
-                    <td>
-                         <a class="nav-link" href="{{ path('cart_Page_Admin',{ 'id': user.id }) }}">
-                              <i class="fa fa-shopping-cart "></i> <!-- add cart icon here -->
-                             <strong>  Cart</strong> 
-                                <span class="badge badge-secondary"> <strong style="color:#ff9966; border-radius: 50%; background-color: #86E2EE; display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center;">{{ user.cart|length }}</strong></span> <!-- add cart counter here -->
-                            
-                  
-                              {# <p class="alert alert-warning"><b>There are <strong style="color:#ff9966; border-radius: 50%; background-color: #f2f2f2; display: inline-block; width: 30px; height: 30px; line-height: 30px; text-align: center;">{{ products|length }}</strong> products in total!</b></p> #}
-                  
-                            </a>
-                    </td>
-                    <td><a  class="btn btn-danger "  onclick="return confirm('are u sure?')" href="{{path('user_delete',{ 'id': user.id })}}">Delete</a></td>
-               </tr>
-
-
-             
+                    <td>{{product.name}}</td>
+                    <td>{{product.Category.name}}</td>
+                    <td>${{product.price|number_format(2)}}</td>
+               </tr>             
                {% endfor %}
-              
           </tbody>
-         
      </table>
-
-     
 </div>
 
 {% endblock %}

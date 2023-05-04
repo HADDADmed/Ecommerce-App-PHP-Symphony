@@ -17,6 +17,59 @@ use Doctrine\ORM\PersistentCollection\getTotalItemCount;
 class CetegoryController extends AbstractController
 {
 
+    #[Route('/category', name: 'app_category')]
+    public function categories(EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request): Response
+    {
+
+        if (!$this->getUser() || !$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('home2.html.twig');
+        }
+
+        $user = $this->getUser();
+        $roles = $user->getRoles();
+    
+        if (in_array('ROLE_ADMIN', $roles)) {
+
+           
+            $category = $paginator->paginate(
+                $entityManager->getRepository(Category::class)->findAll(),
+                $request->query->getInt('page', 1), /*page number*/
+                3 /*limit per page*/
+            );
+            
+                    if (!$category) {
+                        throw $this->createNotFoundException(
+                            'No category found in our DATABASE !'
+                        );
+                    }
+            
+                    return $this->render('Categories\categories.html.twig', [
+                        'categories' => $category,
+                        
+                    ]);
+        
+        }else  if (in_array('ROLE_CLIENT', $roles)) {
+
+           
+            $category = $paginator->paginate(
+                $entityManager->getRepository(Category::class)->findAll(),
+                $request->query->getInt('page', 1), /*page number*/
+                3 /*limit per page*/
+            );
+            
+                    if (!$category) {
+                        throw $this->createNotFoundException(
+                            'No category found in our DATABASE !'
+                        );
+                    }
+            
+                    return $this->render('client\categories.html.twig', [
+                        'categories' => $category,
+                        
+                    ]);
+        
+        }
+    }
 
     #[Route('/category/add/new', name: 'category_new' , methods:['GET','POST'])]
     public function newCat(Request $request, EntityManagerInterface $entityManager): Response
@@ -48,26 +101,48 @@ class CetegoryController extends AbstractController
     #[Route('/category/{id}', name: 'category_d')]
     public function category(Category $category,EntityManagerInterface $entityManager,PaginatorInterface $paginator,Request $request): Response
     {
-            
-
-          $categoryP = $paginator->paginate(
-            $category->getProducts(),
-            $request->query->getInt('page', 1), /*page number*/
-            3 /*limit per page*/
-        );
-    
-        if (!$categoryP) {
-            throw $this->createNotFoundException(
-                'No product found in the our DATABASE !'
-            );
+        if (!$this->getUser() || !$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('home2.html.twig');
         }
-                 $cat = $category->getName();
+
+        $user = $this->getUser();
+        $roles = $user->getRoles();
+        if (in_array('ROLE_ADMIN', $roles)) {
+            $categoryP = $paginator->paginate(
+                $category->getProducts(),
+                $request->query->getInt('page', 1), /*page number*/
+                3 /*limit per page*/
+            );
+        
+            if (!$categoryP) {
+                throw $this->createNotFoundException(
+                    'No product found in the our DATABASE !'
+                );
+            }
+                     $cat = $category->getName();
 
         return $this->render('Categories\category.html.twig', [
             'products' => $categoryP,
             'cat' => $cat,
              'productcount'=> $category->getProducts()->count()
              ]);
+            }elseif (in_array('ROLE_CLIENT', $roles)) {
+                $categoryP =  $category->getProducts();
+            
+                if (!$categoryP) {
+                    throw $this->createNotFoundException(
+                        'No product found in the our DATABASE !'
+                    );
+                }
+                         $cat = $category->getName();
+                $mssg = 'category :'.$cat;
+                       return $this->render('client\homePage.html.twig', [
+               'products' => $categoryP,
+                  'mssg' => $mssg,
+                 'productcount'=> $category->getProducts()->count()
+             ]);
+            }
+            return $this->render('home2.html.twig');
     }
 
     #[Route('/product/deletepc/{id}', name: 'product_deletepc' , methods:['GET','POST'])]
@@ -107,5 +182,9 @@ class CetegoryController extends AbstractController
 
      
  
+
      }
+
+
+
 }

@@ -297,8 +297,24 @@
 
 <div class = "products">
     <div class = "container">
-        <h1 class = "lg-title">Special Products Offers</h1>
-  
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %} 
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+        {% if mssg is defined and mssg  %}
+        <h1 class = "lg-title">{{mssg}}</h1>
+        {% endif %}
+
+        {% if not mssg is defined  %}
+        <h1 class = "lg-title"> Special Products Offers
+        </h1>
+        {% endif %}
         <div class = "product-items" >
             <!-- single product -->
   
@@ -328,10 +344,12 @@
                       </div>
   
                       <div class = "product-btns">
-                        <button type = "button" class = "btn-cart"> add to List
+                        <a href="{{path('addToCart',{ 'id': product.id })}}">
+                        <button type = "button" class = "btn-cart" > add to List
                             <span><i class = "fas fa-th-large"></i></span>
                         </button>
-                        <button type = "button" class = "btn-buy"> add to favourite
+                    </a>
+                        <button  type = "button" class = "btn-buy"> add to favourite
                             <span><i class = "fas fa-heart"></i></span>
                         </button>
                     </div>

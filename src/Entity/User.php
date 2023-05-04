@@ -64,13 +64,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     
 
-   
-
 
     public function __construct(){
 
         $this->createdAt = new DateTimeImmutable();
         $this->Cart = new ArrayCollection();
+       
        
     }
 
@@ -217,6 +216,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
   
 

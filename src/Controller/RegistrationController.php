@@ -54,6 +54,7 @@ class RegistrationController extends AbstractController
                     // $form->getData() holds the submitted values
                     // but, the original `$user` variable has also been updated
                     $user = $form->getData();
+                    $user->setRoles(['ROLE_CLIENT']);
                             $entityManager->persist($user);
                             $entityManager->flush();
                     // ... perform some action, such as saving the task to the database

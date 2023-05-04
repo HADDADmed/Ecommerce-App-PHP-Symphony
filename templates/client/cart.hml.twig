@@ -52,7 +52,7 @@
                                                 <h4 class="mr-1">${{product.price|number_format(2)}}</h4>
                                         </div>
                                                     <div class="d-flex flex-column mt-4">
-                                                        <a class="btn btn-danger btn-sm"  onclick="return confirm('are u sure?')" href="{{path('product_delete',{ 'id': product.id })}}"type="button">Delete from carte</a>
+                                                        <a class="btn btn-danger btn-sm"  onclick="return confirm('are u sure?')" href="{{path('deleteFromCart',{ 'id': product.id })}}"type="button">Delete from carte</a>
                                                         <a class="btn btn btn-secondary btn-sm mt-2" href="{{path('product_edit',{ 'id': product.id })}}" type="button">Add To favourite</a></div>
                                                     </div>
                                         </div>

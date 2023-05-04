@@ -19,12 +19,14 @@ class AppFixtures extends Fixture
     $users = [];
     $generator = Factory::create("fr_FR");
     $products = [];
-
+    $plaintextPassword = '123';
     // create admin user
     $admin = new User();
     $admin->setfUllName('Admin')
           ->setEmail('mohhd2045@gmail.com')
-          ->setRoles(['ROLE_ADMIN']);
+          ->setRoles(['ROLE_ADMIN'])
+          ->setplainPassword($plaintextPassword);
+
 
     $manager->persist($admin);
 
@@ -35,7 +37,7 @@ class AppFixtures extends Fixture
     for ($i = 1; $i <= 5; $i++) { 
         $category = new Category();
         $category->setName('Category '.$i)
-                 ->setImgPath('images/img'.$i.'.png');
+                 ->setImgPath('images/img1'.$i.'.png');
         $manager->persist($category);
 
         // create 5 products for each category
@@ -53,7 +55,7 @@ class AppFixtures extends Fixture
     }
     for ($i = 1; $i <= 9; $i++) {
         $user = new User();
-        $plaintextPassword = '123';
+        
         $user->setfUllName($generator->name())
             ->setEmail($generator->email())
             ->setRoles(['ROLE_CLIENT'])

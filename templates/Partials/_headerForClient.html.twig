@@ -56,6 +56,56 @@
             text-decoration: none;  
             color: white;
         }
+
+        .dropdown {
+            display: inline-block;
+            position: relative;
+          }
+          
+          button{
+            border:none;
+            border-radius:5px;
+            padding:5px 10px;
+            font-size:18px;
+            cursor:pointer;
+          }
+          
+          button:hover{
+            background-color:#ddd;
+          }
+          
+          
+          
+          
+          .dropdown-options {
+            display: none;
+            position: fixed;
+            overflow: auto;
+            background-color:#fff;
+            border-radius:5px;
+            box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+            z-index:2;
+          
+          }
+          
+          .dropdown:hover .dropdown-options {
+            display: block;
+          }
+          
+          .dropdown-options a {
+            display: block;
+            color: #000000;
+            padding: 5px;
+            text-decoration: none;
+            padding:20px 40px;
+          }
+          
+          .dropdown-options a:hover {
+            color: #0a0a23;
+            background-color: #ddd;
+            border-radius:5px;
+          }
+          
     </style>
 </head>
 <body>  
@@ -70,7 +120,7 @@
       </li>
       <li >
         <a class="nav-link" href="{{ path('cart_Page') }}">
-            <i class="fa fa-shopping-cart"></i> <!-- add cart icon here -->
+            <i class="fa fa-shopping-cart "></i> <!-- add cart icon here -->
            <strong>  Cart</strong> {% if app.user %}
               <span class="badge badge-secondary"> <strong style="color:#ff9966; border-radius: 50%; background-color: #f2f2f2; display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center;">{{ app.user.getCart().count() }}</strong></span> <!-- add cart counter here -->
             {% endif %}
@@ -83,9 +133,23 @@
         
         <a class="nav-link " href="#">
             <b>Favourite</b>
-            <span><i class = "fas fa-heart"></i></span>
+            <span><i class="fa fa-heart"></i></span>
 
         </a>
+      </li>
+      <li>
+        <li>
+            <div class="dropdown"  ">
+              <button  >
+                    <strong>  {{app.user.fullName }} </strong>
+              </button>
+              <div style="color: black;" class="dropdown-options">
+                <a style="color: black;" href="{{ path('security.logout') }}" ><strong>Logout</strong></a>
+              </div>
+            </div>
+       
+
+  </li>
       </li>
      </ul>    
   </div>
