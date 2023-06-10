@@ -20,8 +20,9 @@ To run the project, follow these steps:
 3. Navigate to the project directory.
 4. Run the following command to start the Symfony server:
 
-    
-   1-Symfony server:start
+     ## Runn the Command :   
+       1.Symfony server:start 
+       
    
 5. The project will be accessible at the specified server address.
 
