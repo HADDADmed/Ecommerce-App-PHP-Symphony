@@ -73,7 +73,15 @@
           button:hover{
             background-color:#ddd;
           }
-          
+
+           .dropdown button img{
+            width:50px;
+            height:50px;
+            border-radius:50%;
+            margin-right:10px;
+          }
+           
+         
           
           
           
@@ -139,10 +147,11 @@
       </li>
       <li>
         <li>
-            <div class="dropdown"  ">
+            <div class="dropdown" >
               <button  >
-                    <strong>  {{app.user.fullName }} </strong>
-              </button>
+                <img src="{{asset(app.user.imgPath)}}" style="height: 50px; border-radius: 50%;" alt="Account">
+                 <strong>  {{app.user.fullName }} </strong>
+           </button>
               <div style="color: black;" class="dropdown-options">
                 <a style="color: black;" href="{{ path('security.logout') }}" ><strong>Logout</strong></a>
               </div>

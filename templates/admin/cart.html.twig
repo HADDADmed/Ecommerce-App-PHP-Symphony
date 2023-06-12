@@ -47,7 +47,7 @@
                <tr>
                     <td>{{product.name}}</td>
                     <td>{{product.Category.name}}</td>
-                    <td>${{product.price|number_format(2)}}</td>
+                    <td>${{(product.price)|number_format(2)}}</td>
                </tr>             
                {% endfor %}
           </tbody>

@@ -199,13 +199,77 @@ class ClientController extends AbstractController
  
                $this->addFlash(
                   'danger',
-                  'Product deleted successfully '
+                  'Product deleted successfully  from ure cart'
                );
-               return $this->redirectToRoute('home_Page');  
+               return $this->redirectToRoute('cart_Page');  
          
 
  
       }
+
+      #[Route('/cart/delete/',name:"deleteCart",methods:['GET','POST'])]
+      public function deleteCart (EntityManagerInterface $entityManager): Response{
+ 
+         if (!$this->getUser() || !$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+             return $this->render('home2.html.twig');
+         }
+            $user = $this->getUser();
+            $products = $entityManager->getRepository(Product::class)
+                                    ->findAll();
+    
+             foreach ($products as $product) {
+                $user->removeCart($product);
+             }
+             $entityManager->persist($user);
+             $entityManager->flush();
+ 
+               $this->addFlash(
+                  'danger',
+                  'Products deleted successfully  from ure cart'
+               );
+               return $this->redirectToRoute('cart_Page');  
+         
+
+ 
+      }
+      #[Route('/client', name: 'app_client')]
+    public function indexj(EntityManagerInterface $entityManager): Response
+    {
+        // Check if user is authenticated 
+        if (!$this->getUser() || !$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new Response('<h1>Hello HOME</h1>');
+        }
+
+        // Get user object and check roles
+        $user = $this->getUser();
+        $roles = $user->getRoles();
+
+        if (in_array('ROLE_CLIENT', $roles)) {
+            $products = $entityManager->getRepository(Product::class)
+                                ->findAll();
+           
+            if (!$products) {
+                throw $this->createNotFoundException(
+                    'No product found in the our DATABASE !'
+                );
+            }
+            return new Response('<h1>Hello client</h1>');
+        }
+        elseif (in_array('ROLE_ADMIN', $roles)) {
+            
+            $users = [];
+            $users1 = $entityManager->getRepository(User::class)->findAll();
+            foreach ($users1 as $user) {
+                if (in_array('ROLE_ADMIN', $user->getRoles())) {
+                    continue;
+                }
+                $users[] = $user;
+            }
+            return new Response('<h1>Hello ADMIN</h1>');
+    }
+    return new Response('<h1>Hello HOME</h1>');
+}
+
 
     
 }    

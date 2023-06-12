@@ -62,6 +62,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'users')]
     private Collection $Cart;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imgPath = null;
+
     
 
 
@@ -213,6 +216,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCart(Product $cart): self
     {
         $this->Cart->removeElement($cart);
+
+        return $this;
+    }
+
+    public function getImgPath(): ?string
+    {
+        return $this->imgPath;
+    }
+
+    public function setImgPath(?string $imgPath): self
+    {
+        $this->imgPath = $imgPath;
 
         return $this;
     }
